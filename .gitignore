@@ -1,0 +1,4 @@
+# Install app dependencies
+node_modules
+# Variables
+env
