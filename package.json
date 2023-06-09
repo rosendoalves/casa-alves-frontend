@@ -1,22 +1,18 @@
 {
   "name": "casa-alves-frontend",
-  "version": "1.0.0",
-  "description": "This is a project to manage the sales proccess in the store",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rosendoalves/casa-alves-frontend.git"
-  },
-  "keywords": [
-    "business"
-  ],
-  "author": "Alves Team",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rosendoalves/casa-alves-frontend/issues"
-  },
-  "homepage": "https://github.com/rosendoalves/casa-alves-frontend#readme"
+  "dependencies": {
+    "eslint": "8.42.0",
+    "eslint-config-next": "13.4.4",
+    "next": "13.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }
