@@ -3,9 +3,7 @@ import "./ticket.css";
 
 const Ticket = () => {
   const [formData, setFormData] = useState([{ id: 1, name: "", price: 0 }]);
-  console.log("🚀 ~ file: Ticket.jsx:6 ~ Ticket ~ formData:", formData);
   const [total, setTotal] = useState(0);
-  console.log("🚀 ~ file: Ticket.jsx:8 ~ Ticket ~ total:", total);
 
   const sumTotal = () => {
     const prices = formData.map((data) => parseInt(data.price, 10));

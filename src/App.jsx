@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './App.css';
-import Ticket from './components/Ticket';
+import Home from './components/home/Home';
+import { ThemeContext } from './context/ThemeContext';
+import ButtonTheme from './components/buttonTheme/ButtonTheme';
+
 
 function App() {
+
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-     <Ticket/>
+    <div className={`app ${theme}`} data-theme={theme}>
+    <ButtonTheme />
+     <Home/>
     </div>
   );
 }
