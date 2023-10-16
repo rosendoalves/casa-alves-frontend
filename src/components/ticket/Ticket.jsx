@@ -1,80 +1,62 @@
-import React, { useEffect, useState } from "react";
-import "./ticket.css";
+import React from "react";
+import "./ticketv2.css";
+import useTicket from "./useTicket";
+import { Form, Col, Row, Button } from "react-bootstrap";
 
 const Ticket = () => {
-  const [formData, setFormData] = useState([{ id: 1, name: "", price: 0 }]);
-  const [total, setTotal] = useState(0);
-
-  const sumTotal = () => {
-    const prices = formData.map((data) => parseInt(data.price, 10));
-    const totalAmount = prices.reduce((total, price) => total + price, 0);
-    setTotal(totalAmount);
-  };
-  useEffect(() => {
-    sumTotal();
-  }, [formData.length]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
-
-  const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => {
-      const updatedFormData = [...prevFormData];
-      updatedFormData[index] = {
-        ...updatedFormData[index],
-        [name.slice(0, -1)]: value,
-      };
-      return updatedFormData;
-    });
-  };
-
-  const addLine = () => {
-    const newId = formData.length + 1;
-    setFormData([...formData, { id: newId, name: "", price: 0 }]);
-  };
-
-  const removeLine = (id) => {
-    const updatedFormData = formData.filter((line) => line.id !== id);
-    setFormData(updatedFormData);
-  };
+  const {
+    formData,
+    total,
+    handleSubmit,
+    handleInputChange,
+    addLine,
+    removeLine,
+  } = useTicket();
 
   return (
-    <div className="form-ticket">
-      <h1>Nuevo Ticket</h1>
-      <form id="form" onSubmit={handleSubmit}>
+    <div className="form-tickets text-center">
+      <Form className="form-ticket" onSubmit={handleSubmit}>
         {formData.map((line, index) => (
-          <div key={line.id}>
-            <label htmlFor={`name${line.id}`}>Producto</label>
-            <input
-              type="text"
-              name={`name${line.id}`}
-              value={formData[index].name}
-              onChange={(event) => handleInputChange(index, event)}
-            />
-            <label htmlFor={`price${line.id}`}>Precio</label>
-            <input
-              type="number"
-              name={`price${line.id}`}
-              value={formData[index].price}
-              onChange={(event) => handleInputChange(index, event)}
-            />
-            <button type="button" onClick={() => removeLine(line.id)}>
-              Eliminar
-            </button>
-          </div>
+          <Row className="mb-3" key={line.id}>
+            <Form.Group as={Col} sm={7} controlId={`name${line.id}`}>
+              <Form.Label>Producto</Form.Label>
+              <Form.Control
+                type="text"
+                name={`name${line.id}`}
+                value={formData[index].name}
+                onChange={(event) => handleInputChange(index, event)}
+                placeholder="Ingrese un producto"
+              />
+            </Form.Group>
+            <Form.Group as={Col} sm={3} controlId={`price${line.id}`}>
+              <Form.Label>Precio</Form.Label>
+              <Form.Control
+                type="number"
+                name={`price${line.id}`}
+                value={formData[index].price}
+                onChange={(event) => handleInputChange(index, event)}
+                placeholder="Ingrese un precio"
+              />
+            </Form.Group>
+            <Form.Group as={Col} sm={2} className="d-flex align-items-end">
+              <Button
+                className="btn btn-danger"
+                type="button"
+                onClick={() => removeLine(line.id)}
+              >
+                Eliminar
+              </Button>
+            </Form.Group>
+          </Row>
         ))}
-        <br />
-        <button type="button" onClick={addLine}>
-          +
-        </button>
-        <p>Total ${total}</p>
-        <button type="submit" onClick={handleSubmit}>
-          Crear ticket
-        </button>
-      </form>
+        <Button className="btn btn-success" type="button" onClick={addLine}>
+          Añadir
+        </Button>
+        <div className="my-3">Total ${total}</div>
+        <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>
+          Enviar
+        </Button>
+      </Form>
     </div>
   );
 };

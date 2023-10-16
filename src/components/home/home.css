@@ -1,5 +1,14 @@
 .home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.business {
+  max-height: 50vh;
+}
+
+.duck {
+  max-height: 25vh;
+}
