@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,31 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+/* Estilos comunes para ambos temas */
+.app {
+  /* padding: 20px; */
+  font-family: Arial, sans-serif;
 }
+
+/* Estilos específicos para el tema claro */
+[data-theme='light'] {
+  --bg-color: #ffffff;
+  --text-color: #0a080876;
+}
+
+.app.light {
+  background-color: var(--bg-color);
+}
+
+/* Estilos específicos para el tema oscuro */
+[data-theme='dark'] {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+}
+
+.app.dark {
+  background-color: var(--bg-color);
+}
+
