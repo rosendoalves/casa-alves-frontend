@@ -1,4 +1,5 @@
 {
+  "homepage": "https://rosendoalves.github.io/casa-alves-frontend/",
   "name": "casa-alves-frontend",
   "version": "0.1.0",
   "private": true,
@@ -18,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +43,7 @@
   },
   "devDependencies": {
     "eslint": "^8.43.0",
-    "eslint-plugin-react": "^7.32.2"
+    "eslint-plugin-react": "^7.32.2",
+    "gh-pages": "^6.0.0"
   }
 }
