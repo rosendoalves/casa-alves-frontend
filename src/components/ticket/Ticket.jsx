@@ -1,5 +1,5 @@
 import React from "react";
-import "./ticketv2.css";
+import "./ticket.css";
 import useTicket from "./useTicket";
 import { Form, Col, Row, Button } from "react-bootstrap";
 

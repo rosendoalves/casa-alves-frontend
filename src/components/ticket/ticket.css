@@ -1,48 +1,12 @@
-.form-ticket {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem;
-    padding: 2rem;
-    border-radius: 10px;
-    border: 1px solid #000000;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-.line {
+.form-tickets {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.input-group,
-.trash-group {
-  margin-right: 10px;
-  margin: 5px
-}
-
-.btn-delete {
-  cursor: pointer;
-  background-color:#fa1a00;
-  color: white;
-  border:none;
-  border-radius: 50%;
-  font-size: large;
-  align-self: flex-end;
-}
-.btn-add {
-  cursor: pointer;
-  background-color: #00b86a;
-  color: white;
-  border:none;
-  border-radius: 50%;
-  font-size: large;
-  align-self: flex-end;
-}
-.btn-action {
-  cursor: pointer;
-  background-color: #0046b5;
-  color: white;
-  border:solid 1px white;
-  border-radius: 10%;
+/* Estilo para el elemento que muestra el "Total" */
+.form-ticket > div {
+  text-align: center;
+  justify-content: center;
 }
