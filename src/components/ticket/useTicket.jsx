@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ticket.css";
+import { createTicket } from "../../api/ticketApi";
 
 const useTicket = () => {
   const [formData, setFormData] = useState([{ id: 1, name: "", price: 0, quantity: 1 }]);
@@ -15,8 +16,16 @@ const useTicket = () => {
   }, [formData.length]);
 
   const handleSubmit = (e) => {
+    const form = {
+      items: formData,
+      total: total
+    }
     e.preventDefault();
-    console.log(formData);
+    console.log(form);
+    createTicket(form)
+    .then((res) => {
+      console.log(res)
+    })
   };
 
   const handleInputChange = (index, event) => {

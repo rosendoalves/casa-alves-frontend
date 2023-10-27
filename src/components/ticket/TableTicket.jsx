@@ -10,35 +10,14 @@ const TableTicket = () => {
   const [openRow, setOpenRow] = useState(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [tickets, setTickets] = useState([]);
-  console.log("🚀 ~ file: TableTicket.jsx:13 ~ TableTicket ~ tickets:", tickets)
 
   useEffect(() => {
     // Simulamos un proceso asíncrono para cargar datos
-    getTickets().then(res => setTickets(res))
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Simula una carga de 2 segundos
+    getTickets().then(res => {
+      setTickets(res)
+      setLoading(false)
+    })
   }, []);
-
-  // const tickets = [
-  //   {
-  //     id: 1,
-  //     items: [
-  //       { quantity: 2, name: "Producto 1", price: 1200 },
-  //       { quantity: 1, name: "Producto 2", price: 1500 },
-  //       { quantity: 3, name: "Producto 3", price: 3000 },
-  //     ],
-  //     total: 5700,
-  //   },
-  //   {
-  //     id: 2,
-  //     items: [
-  //       { quantity: 1, name: "Producto A", price: 800 },
-  //       { quantity: 2, name: "Producto B", price: 1200 },
-  //     ],
-  //     total: 3200,
-  //   },
-  // ];
 
   const handlePrint = (event, ticket) => {
     event.stopPropagation();
