@@ -10,3 +10,21 @@
   text-align: center;
   justify-content: center;
 }
+
+.column-width-id {
+  width: 33%; /* Ancho deseado para la columna "ID" */
+}
+
+.column-width-total {
+  width: 33%; /* Ancho deseado para la columna "Total" */
+}
+
+.table-details{
+  width: 100%;
+}
+
+.button-link{
+  text-decoration: none; /* Eliminar subrayado */
+  color: white; /* Cambiar el color del texto, si lo deseas */
+}
+
