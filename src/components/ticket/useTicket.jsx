@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./ticket.css";
 
 const useTicket = () => {
-  const [formData, setFormData] = useState([{ id: 1, name: "", price: 0 }]);
+  const [formData, setFormData] = useState([{ id: 1, name: "", price: 0, quantity: 1 }]);
   const [total, setTotal] = useState(0);
 
   const sumTotal = () => {
@@ -33,7 +33,7 @@ const useTicket = () => {
 
   const addLine = () => {
     const newId = formData.length + 1;
-    setFormData([...formData, { id: newId, name: "", price: 0 }]);
+    setFormData([...formData, { id: newId, name: "", price: 0,  quantity: 1  }]);
   };
 
   const removeLine = (id) => {
