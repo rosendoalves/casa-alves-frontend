@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Collapse } from "react-bootstrap";
 import Loading from "../spinner/Loading";
-import './ticket.css'
+import "./ticket.css";
 import { Link } from "react-router-dom";
-import { getTickets } from "../../api/ticketApi";
+import { deleteTicket, getTickets, printTicket } from "../../api/ticketApi";
 
 const TableTicket = () => {
   const [loading, setLoading] = useState(true);
@@ -12,25 +12,23 @@ const TableTicket = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    // Simulamos un proceso asíncrono para cargar datos
-    getTickets().then(res => {
-      setTickets(res)
-      setLoading(false)
-    })
-  }, []);
+    getTickets().then((res) => {
+      setTickets(res);
+      setLoading(false);
+    });
+  }, [loading]);
 
   const handlePrint = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    // Implementa la lógica para imprimir aquí, puedes usar ticket para obtener los detalles del ticket
-    console.log("🚀 PRINT", ticket);
+    printTicket(ticket);
   };
 
   const handleDelete = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    // Implementa la lógica para eliminar aquí, puedes usar ticket para obtener los detalles del ticket
-    console.log("🚀 DELETE", ticket);
+    deleteTicket(ticket._id);
+    setLoading(true);
   };
 
   const toggleRow = (index, ticket) => {
@@ -42,12 +40,15 @@ const TableTicket = () => {
     }
   };
 
-  return (
-    loading ? (
-      <Loading />
-    ) : (
-      <>
-            <Button className='btn btn-warning'><Link className="button-link" to="/ticket/form">Nuevo</Link></Button>
+  return loading ? (
+    <Loading />
+  ) : (
+    <>
+      <Button className="btn btn-warning">
+        <Link className="button-link" to="/ticket/form">
+          Nuevo
+        </Link>
+      </Button>
 
       <Table striped bordered hover size="sm">
         <thead>
@@ -58,20 +59,16 @@ const TableTicket = () => {
           </tr>
         </thead>
         <tbody>
-          {tickets.map((ticket, index) => (
+          {tickets.payload.map((ticket, index) => (
             <React.Fragment key={ticket.id}>
               <tr onClick={() => toggleRow(index, ticket)}>
                 <td className="column-width-id">{ticket.id}</td>
                 <td className="column-width-total">{ticket.total}</td>
                 <td className="text-center">
-                  <Button
-                    onClick={(e) => handlePrint(e, ticket)}
-                  >
+                  <Button onClick={(e) => handlePrint(e, ticket)}>
                     <i className="fa-solid fa-print"></i>
                   </Button>
-                  <Button
-                    onClick={(e) => handleDelete(e, ticket)}
-                  >
+                  <Button onClick={(e) => handleDelete(e, ticket)}>
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </td>
@@ -90,7 +87,8 @@ const TableTicket = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {selectedTicket && selectedTicket.id === ticket.id &&
+                          {selectedTicket &&
+                            selectedTicket.id === ticket.id &&
                             ticket.items.map((item, itemIndex) => (
                               <tr key={itemIndex}>
                                 <td>{item.quantity}</td>
@@ -109,9 +107,7 @@ const TableTicket = () => {
           ))}
         </tbody>
       </Table>
-      </>
-
-    )
+    </>
   );
 };
 

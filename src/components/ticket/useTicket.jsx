@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import "./ticket.css";
 import { createTicket } from "../../api/ticketApi";
+import { useNavigate } from "react-router-dom";
 
 const useTicket = () => {
   const [formData, setFormData] = useState([{ id: 1, name: "", price: 0, quantity: 1 }]);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
 
   const sumTotal = () => {
     const prices = formData.map((data) => parseInt(data.price, 10));
@@ -23,8 +25,8 @@ const useTicket = () => {
     e.preventDefault();
     console.log(form);
     createTicket(form)
-    .then((res) => {
-      console.log(res)
+    .then(() => {
+      navigate('/ticket')
     })
   };
 

@@ -16,7 +16,7 @@ const Ticket = () => {
 
   return (
     <div className="form-tickets text-center">
-      <Button className='btn btn-warning'><Link className="button-link" to="/ticket">Volver</Link></Button>
+      
       <Form className="form-ticket" onSubmit={handleSubmit}>
         {formData.map((line, index) => (
           <Row className="mb-3" key={line.id}>
@@ -65,8 +65,9 @@ const Ticket = () => {
         </Button>
         <div className="my-3">Total ${total}</div>
         <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>
-          Enviar
+          Guardar
         </Button>
+        <Button className='btn btn-warning'><Link className="button-link" to="/ticket">Volver</Link></Button>
       </Form>
     </div>
   );
