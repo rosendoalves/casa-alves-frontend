@@ -10,15 +10,16 @@ export const getTickets = async () => {
             method: "GET",
             headers: {Authorization: `Bearer ${token}`}
         });
-
-        if (!response.ok) {
-            throw new Error(`Error al obtener los tickets. Código de estado: ${response.status}`);
-        }
-
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error al obtener los tickets:', error);
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sin tickets',
+            showConfirmButton: false,
+            timer: 1500
+          })
         throw error;
     }
 }
@@ -65,10 +66,6 @@ export const deleteTicket = async (_id) => {
             headers: {Authorization: `Bearer ${token}`}
         });
 
-        if (!response.ok) {
-            throw new Error(`Error al eliminar el ticket. Código de estado: ${response.status}`);
-        }
-
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -77,9 +74,15 @@ export const deleteTicket = async (_id) => {
             timer: 1500,
         });
 
-        return true; // Puedes retornar un indicador de éxito si lo deseas
+        return response
     } catch (error) {
-        console.error('Error al eliminar el ticket:', error);
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ticket no eliminado',
+            showConfirmButton: false,
+            timer: 1500
+          })
         throw error;
     }
 }
@@ -91,11 +94,6 @@ export const printTicket = async (ticket) => {
             body: ticket,
             headers: {Authorization: `Bearer ${token}`}
         });
-
-        if (!response.ok) {
-            throw new Error(`Error al reimprimir el ticket. Código de estado: ${response.status}`);
-        }
-
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -104,9 +102,15 @@ export const printTicket = async (ticket) => {
             timer: 1500,
         });
 
-        return true; 
+        return response; 
     } catch (error) {
-        console.error('Error al reimprimir el ticket:', error);
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'No se pudo conectar con la impresora',
+            showConfirmButton: false,
+            timer: 1500
+          })
         throw error;
     }
 }

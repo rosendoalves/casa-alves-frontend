@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ticket.css";
-import { createTicket } from "../../api/ticketApi";
+import { createTicket, printTicket } from "../../api/ticketApi";
 import { useNavigate } from "react-router-dom";
 
 const useTicket = () => {
@@ -25,8 +25,11 @@ const useTicket = () => {
     e.preventDefault();
     console.log(form);
     createTicket(form)
-    .then(() => {
+    .then((res) => {
+     printTicket(res)
+     .then(() => {
       navigate('/ticket')
+     })
     })
   };
 
