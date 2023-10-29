@@ -1,8 +1,8 @@
 import Swal from 'sweetalert2'
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNjNThhNmU2OGRjMzVlZGUyYjEwMzYiLCJ1c2VyaWQiOiJyb3NuZWRvYWx2ZXMxIiwicm9sZSI6WyJhZG1pbiJdLCJpYXQiOjE2OTg0NTQwOTMsImV4cCI6MTY5ODUyNjA5M30.I3FE2DnHo3QPKcPQHG3oTtCND3HA81GYOr73pHBCLz0"
+// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNjNThhNmU2OGRjMzVlZGUyYjEwMzYiLCJ1c2VyaWQiOiJyb3NuZWRvYWx2ZXMxIiwicm9sZSI6WyJhZG1pbiJdLCJpYXQiOjE2OTg0NTQwOTMsImV4cCI6MTY5ODUyNjA5M30.I3FE2DnHo3QPKcPQHG3oTtCND3HA81GYOr73pHBCLz0"
 
-export const getTickets = async () => {
+export const getTickets = async (token) => {
 
 
     try {
@@ -11,6 +11,14 @@ export const getTickets = async () => {
             headers: {Authorization: `Bearer ${token}`}
         });
         const data = await response.json();
+         if (data.payload && data.payload.length > 0) {
+            data.payload.sort((a, b) => {
+                // Convierte las fechas createdAt en objetos Date y compáralas
+                const dateA = new Date(a.createdAt);
+                const dateB = new Date(b.createdAt);
+                return dateA - dateB;
+            });
+        }
         return data;
     } catch (error) {
         Swal.fire({
@@ -25,7 +33,7 @@ export const getTickets = async () => {
 }
 
 
-export const createTicket = async (data) => {
+export const createTicket = async (data, token) => {
     const url = "http://localhost:8000/api/tickets/saveTicket";
     const params = {
         method: 'POST',
@@ -59,7 +67,7 @@ export const createTicket = async (data) => {
     }
 }
 
-export const deleteTicket = async (_id) => {
+export const deleteTicket = async (_id, token) => {
     try {
         const response = await fetch(`http://localhost:8000/api/tickets/deleteTicket?_id=${_id}`, {
             method: 'DELETE',
@@ -87,7 +95,7 @@ export const deleteTicket = async (_id) => {
     }
 }
 
-export const printTicket = async (ticket) => {
+export const printTicket = async (ticket, token) => {
     try {
         const response = await fetch(`http://localhost:8000/api/tickets/printTicket`, {
             method: 'POST',

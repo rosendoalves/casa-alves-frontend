@@ -12,11 +12,11 @@
 }
 
 .column-width-id {
-  width: 33%; /* Ancho deseado para la columna "ID" */
+  width: 20%; /* Ancho deseado para la columna "ID" */
 }
 
 .column-width-total {
-  width: 33%; /* Ancho deseado para la columna "Total" */
+  width: 20%; /* Ancho deseado para la columna "Total" */
 }
 
 .table-details{

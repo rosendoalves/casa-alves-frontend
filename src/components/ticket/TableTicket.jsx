@@ -4,15 +4,23 @@ import Loading from "../spinner/Loading";
 import "./ticket.css";
 import { Link } from "react-router-dom";
 import { deleteTicket, getTickets, printTicket } from "../../api/ticketApi";
+import useToken from "../../hooks/useToken";
+import { formatTime, formatDateShow, formatNumberWithCommas } from "../../utils/format";
 
 const TableTicket = () => {
   const [loading, setLoading] = useState(true);
   const [openRow, setOpenRow] = useState(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [tickets, setTickets] = useState([]);
+  const { token } = useToken();
 
   useEffect(() => {
-    getTickets().then((res) => {
+    getTickets(token).then((res) => {
+      res.payload.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+    });
       setTickets(res);
       setLoading(false);
     });
@@ -21,13 +29,13 @@ const TableTicket = () => {
   const handlePrint = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    printTicket(ticket);
+    printTicket(ticket, token);
   };
 
   const handleDelete = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    deleteTicket(ticket._id);
+    deleteTicket(ticket._id, token);
     setLoading(true);
   };
 
@@ -52,8 +60,11 @@ const TableTicket = () => {
 
       <Table striped bordered hover size="sm">
         <thead>
-          <tr>
-            <th className="column-width-id">ID</th>
+          <tr className="text-center">
+            <th className="column-width-id">Fecha</th>
+            <th className="column-width-id">Hora</th>
+            <th className="column-width-id">Usuario</th>
+            {/* <th className="column-width-id">ID</th> */}
             <th className="column-width-total">Total</th>
             <th>Acciones</th>
           </tr>
@@ -61,10 +72,13 @@ const TableTicket = () => {
         <tbody>
           {tickets.payload.map((ticket, index) => (
             <React.Fragment key={ticket.id}>
-              <tr onClick={() => toggleRow(index, ticket)}>
-                <td className="column-width-id">{ticket.id}</td>
-                <td className="column-width-total">{ticket.total}</td>
-                <td className="text-center">
+              <tr className="text-center" onClick={() => toggleRow(index, ticket)}>
+                <td className="column-width-id">{formatDateShow(ticket.createdAt)}</td>
+                <td className="column-width-id">{formatTime(ticket.createdAt)}</td>
+                <td className="column-width-id">{ticket.createdByDisplayValue}</td>
+                {/* <td className="column-width-id">{ticket.id}</td> */}
+                <td className="ccolumn-width-id">$ {formatNumberWithCommas(ticket.total)}</td>
+                <td className="d-flex text-center justify-content-around">
                   <Button onClick={(e) => handlePrint(e, ticket)}>
                     <i className="fa-solid fa-print"></i>
                   </Button>
@@ -93,8 +107,8 @@ const TableTicket = () => {
                               <tr key={itemIndex}>
                                 <td>{item.quantity}</td>
                                 <td>{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.quantity * item.price}</td>
+                                <td>$ {formatNumberWithCommas(item.price)}</td>
+                                <td>$ {formatNumberWithCommas(item.quantity * item.price)}</td>
                               </tr>
                             ))}
                         </tbody>
