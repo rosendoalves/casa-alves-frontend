@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ticket.css";
-import { createTicket, printTicket } from "../../api/ticketApi";
+import { createTicket } from "../../api/ticketApi";
 import { useNavigate } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 
@@ -28,11 +28,9 @@ const useTicket = () => {
     console.log(form);
     createTicket(form, token)
     .then((res) => {
-     printTicket(res)
-     .then(() => {
-      navigate('/ticket')
-     })
+      if(res.status === 200) navigate('/ticket')
     })
+    
   };
 
   const handleInputChange = (index, event) => {

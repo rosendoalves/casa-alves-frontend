@@ -15,6 +15,7 @@ function App() {
 
   const { theme } = useContext(ThemeContext);
   const { token, setToken } = useToken();
+  console.log("🚀 ~ file: App.jsx:18 ~ App ~ token:", token)
   if(!token) {
     return <Login setToken={setToken}/>
   }

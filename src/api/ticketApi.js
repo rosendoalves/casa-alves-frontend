@@ -13,7 +13,6 @@ export const getTickets = async (token) => {
         const data = await response.json();
          if (data.payload && data.payload.length > 0) {
             data.payload.sort((a, b) => {
-                // Convierte las fechas createdAt en objetos Date y compáralas
                 const dateA = new Date(a.createdAt);
                 const dateB = new Date(b.createdAt);
                 return dateA - dateB;
@@ -47,14 +46,19 @@ export const createTicket = async (data, token) => {
     try {
         const response = await fetch(url, params);
         const data = await response.json();
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Ticket creado correctamente',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        return data;
+        if(data.status !== 200)  {
+            throw new Error('El servidor respondió con un estado no exitoso.');
+        } else {
+
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Ticket creado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return data;
+        }
     } catch (error) {
         Swal.fire({
             position: 'center',
@@ -63,17 +67,19 @@ export const createTicket = async (data, token) => {
             showConfirmButton: false,
             timer: 1500
           })
-        throw error;
+        return error;
     }
 }
 
 export const deleteTicket = async (_id, token) => {
     try {
-        const response = await fetch(`http://localhost:8000/api/tickets/deleteTicket?_id=${_id}`, {
+        const response = await fetch(`http://localhost:8000/api/tickets/deleteTicket/${_id}`, {
             method: 'DELETE',
             headers: {Authorization: `Bearer ${token}`}
         });
-
+        if(response.status !== 200)  {
+            throw new Error('No se pudo eliminar el ticket.');
+        } else {
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -83,6 +89,7 @@ export const deleteTicket = async (_id, token) => {
         });
 
         return response
+    }
     } catch (error) {
         Swal.fire({
             position: 'center',
@@ -91,7 +98,7 @@ export const deleteTicket = async (_id, token) => {
             showConfirmButton: false,
             timer: 1500
           })
-        throw error;
+        return error;
     }
 }
 
@@ -102,6 +109,9 @@ export const printTicket = async (ticket, token) => {
             body: ticket,
             headers: {Authorization: `Bearer ${token}`}
         });
+        if(response.status !== 200)  {
+            throw new Error('No se pudo conectar la impresora.');
+        } else {
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -111,6 +121,7 @@ export const printTicket = async (ticket, token) => {
         });
 
         return response; 
+    }
     } catch (error) {
         Swal.fire({
             position: 'center',
@@ -119,7 +130,7 @@ export const printTicket = async (ticket, token) => {
             showConfirmButton: false,
             timer: 1500
           })
-        throw error;
+        return error;
     }
 }
 
