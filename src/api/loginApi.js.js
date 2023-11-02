@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export const loginUser = async (credentials) => {
-    const url = 'http://localhost:8000/api/auth/login'
+    const url = `${process.env.REACT_APP_URL}/api/auth/login`
     const params = {
       method: 'POST',
       headers: {

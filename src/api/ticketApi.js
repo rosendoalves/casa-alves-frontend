@@ -1,12 +1,9 @@
 import Swal from 'sweetalert2'
 
-// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNjNThhNmU2OGRjMzVlZGUyYjEwMzYiLCJ1c2VyaWQiOiJyb3NuZWRvYWx2ZXMxIiwicm9sZSI6WyJhZG1pbiJdLCJpYXQiOjE2OTg0NTQwOTMsImV4cCI6MTY5ODUyNjA5M30.I3FE2DnHo3QPKcPQHG3oTtCND3HA81GYOr73pHBCLz0"
-
 export const getTickets = async (token) => {
 
-
     try {
-        const response = await fetch(`http://localhost:8000/api/tickets/getTickets`, {
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/tickets/getTickets`, {
             method: "GET",
             headers: {Authorization: `Bearer ${token}`}
         });
@@ -33,7 +30,7 @@ export const getTickets = async (token) => {
 
 
 export const createTicket = async (data, token) => {
-    const url = "http://localhost:8000/api/tickets/saveTicket";
+    const url = `${process.env.REACT_APP_URL}/api/tickets/saveTicket`;
     const params = {
         method: 'POST',
         headers: {
@@ -73,7 +70,7 @@ export const createTicket = async (data, token) => {
 
 export const deleteTicket = async (_id, token) => {
     try {
-        const response = await fetch(`http://localhost:8000/api/tickets/deleteTicket/${_id}`, {
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/tickets/deleteTicket/${_id}`, {
             method: 'DELETE',
             headers: {Authorization: `Bearer ${token}`}
         });
@@ -104,7 +101,7 @@ export const deleteTicket = async (_id, token) => {
 
 export const printTicket = async (ticket, token) => {
     try {
-        const response = await fetch(`http://localhost:8000/api/tickets/printTicket`, {
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/tickets/printTicket`, {
             method: 'POST',
             body: ticket,
             headers: {Authorization: `Bearer ${token}`}
