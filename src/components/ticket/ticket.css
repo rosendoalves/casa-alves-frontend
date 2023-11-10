@@ -1,4 +1,39 @@
+.table-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.header-table {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+  align-items: center;
+}
+
+.table-expandable {
+  margin-top: 1rem;
+}
+
+.table-collapsed {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease;
+}
+.table-collapsed.expanded {
+  height: auto;
+}
+
+
+.table-row {
+  width: 100%;
+  padding: 1rem;
+}
+
 .form-tickets {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,6 +60,17 @@
 
 .button-link{
   text-decoration: none; /* Eliminar subrayado */
-  color: white; /* Cambiar el color del texto, si lo deseas */
+  /* color: white;  */
+}
+
+.button-container {
+  position: relative;
+    top: -4px;
+    left: 5px;
+}
+
+.button-form-ticket {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 

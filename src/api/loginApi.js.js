@@ -1,16 +1,16 @@
 import Swal from "sweetalert2";
 
 export const loginUser = async (credentials) => {
-    const url = `${process.env.REACT_APP_URL}/api/auth/login`
-    const params = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    }
     try {
-        const response = await fetch(url, params);
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+          });
+          console.log("🚀 ~ file: loginApi.js.js:7 ~ loginUser ~ response:", response)
+
         const data = await response.json();
         Swal.fire({
             position: 'center',

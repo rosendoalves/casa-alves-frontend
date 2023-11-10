@@ -1,8 +1,9 @@
 import React from "react";
 import "./ticket.css";
 import useTicket from "./useTicket";
-import { Form, Col, Row, Button } from "react-bootstrap";
+import { Form, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { formatNumberWithCommas } from "../../utils/format";
 
 const Ticket = () => {
   const {
@@ -16,12 +17,11 @@ const Ticket = () => {
 
   return (
     <div className="form-tickets text-center">
-      
       <Form className="form-ticket" onSubmit={handleSubmit}>
         {formData.map((line, index) => (
           <Row className="mb-3" key={line.id}>
             <Form.Group as={Col} sm={2} controlId={`quantity${line.id}`}>
-              <Form.Label>Cantidad</Form.Label>
+              {index === 0 && <Form.Label>Cantidad</Form.Label>}
               <Form.Control
                 type="number"
                 name={`quantity${line.id}`}
@@ -30,7 +30,7 @@ const Ticket = () => {
               />
             </Form.Group>
             <Form.Group as={Col} sm={6} controlId={`name${line.id}`}>
-              <Form.Label>Producto</Form.Label>
+              {index === 0 && <Form.Label>Producto</Form.Label>}
               <Form.Control
                 type="text"
                 name={`name${line.id}`}
@@ -40,7 +40,7 @@ const Ticket = () => {
               />
             </Form.Group>
             <Form.Group as={Col} sm={2} controlId={`price${line.id}`}>
-              <Form.Label>Precio</Form.Label>
+              {index === 0 && <Form.Label>Precio</Form.Label>}
               <Form.Control
                 type="number"
                 name={`price${line.id}`}
@@ -50,24 +50,34 @@ const Ticket = () => {
               />
             </Form.Group>
             <Form.Group as={Col} sm={2} className="d-flex align-items-end">
-              <Button
-                className="btn btn-danger"
+              <button
+                className=""
                 type="button"
                 onClick={() => removeLine(line.id)}
               >
                 Eliminar
-              </Button>
+              </button>
             </Form.Group>
           </Row>
         ))}
-        <Button className="btn btn-success" type="button" onClick={addLine}>
+        <button className="" type="button" onClick={addLine}>
           Añadir
-        </Button>
-        <div className="my-3">Total ${total}</div>
-        <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>
-          Guardar
-        </Button>
-        <Button className='btn btn-warning'><Link className="button-link" to="/ticket">Volver</Link></Button>
+        </button>
+        <div className="my-3">Total ${formatNumberWithCommas(total)}</div>
+        <div className="button-container">
+          <button
+            className="button-form-ticket"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Guardar
+          </button>
+          <button className="button-form-ticket">
+            <Link className="button-link" to="/ticket">
+              Volver
+            </Link>
+          </button>
+        </div>
       </Form>
     </div>
   );

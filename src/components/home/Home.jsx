@@ -1,13 +1,13 @@
 import React from 'react';
 import './home.css';
 import place from '../assets/negocio.png'
-import duck from '../assets/pato.gif'
+// import duck from '../assets/pato.gif'
 
 const Home = () => {
 
   return (
-    <div className="container home">
-      <div>
+    <div className="container-home">
+      {/* <div> */}
       <h1>
      Bienvenido a Casa Alves!
       </h1>
@@ -15,14 +15,14 @@ const Home = () => {
       src={place}
       className='img-fluid business'
       />
-      </div>
-      <div className='container text-center'>
+      {/* </div> */}
+      {/* <div className='container text-center'>
       <img 
       src={duck}
       className='img-fluid duck'
       />
       <p>Tranquilo loquito! Estamos trabajando</p>
-      </div>
+      </div> */}
     </div>
   );
 };

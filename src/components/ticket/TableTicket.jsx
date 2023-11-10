@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Collapse } from "react-bootstrap";
+import { Collapse } from "react-bootstrap";
 import Loading from "../spinner/Loading";
 import "./ticket.css";
 import { Link } from "react-router-dom";
-import { deleteTicket, getTickets, printTicket } from "../../api/ticketApi";
-import useToken from "../../hooks/useToken";
+import useTicketApi from "../../api/ticketApi";
 import {
   formatTime,
   formatDateShow,
@@ -16,10 +15,10 @@ const TableTicket = () => {
   const [openRow, setOpenRow] = useState(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [tickets, setTickets] = useState([]);
-  const { token } = useToken();
+  const {getTickets, printTicket, deleteTicket} = useTicketApi()
 
   useEffect(() => {
-    getTickets(token).then((res) => {
+    getTickets().then((res) => {
       res.payload.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
@@ -27,19 +26,20 @@ const TableTicket = () => {
       });
       setTickets(res.payload);
       setLoading(false);
-    });
+    })
+    .catch(() => setLoading(false));
   }, [loading]);
 
   const handlePrint = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    printTicket(ticket, token);
+    printTicket(ticket);
   };
 
   const handleDelete = (event, ticket) => {
     event.stopPropagation();
     setOpenRow(null);
-    deleteTicket(ticket._id, token);
+    deleteTicket(ticket._id);
     setLoading(true);
   };
 
@@ -55,14 +55,17 @@ const TableTicket = () => {
   return loading ? (
     <Loading />
   ) : (
-    <>
-      <Button className="btn btn-warning">
-        <Link className="button-link" to="/ticket/form">
+    <div className="table-container">
+      <div className="header-table">
+        <h1>Ticket Realizados</h1>
+      <button className="">
+        <Link  className="button-link" to="/ticket/form">
           Nuevo
         </Link>
-      </Button>
+      </button>
+      </div>
       {tickets.length > 0 ? (
-        <Table striped bordered hover size="sm">
+        <table className="table-expandable" >
           <thead>
             <tr className="text-center">
               <th className="column-width-id">Fecha</th>
@@ -77,7 +80,7 @@ const TableTicket = () => {
             {tickets.map((ticket, index) => (
               <React.Fragment key={ticket.id}>
                 <tr
-                  className="text-center"
+                  className={`text-center ${openRow === index ? 'active' : ''}`}
                   onClick={() => toggleRow(index, ticket)}
                 >
                   <td className="column-width-id">
@@ -94,18 +97,18 @@ const TableTicket = () => {
                     $ {formatNumberWithCommas(ticket.total)}
                   </td>
                   <td className="d-flex text-center justify-content-around">
-                    <Button onClick={(e) => handlePrint(e, ticket)}>
+                    <button onClick={(e) => handlePrint(e, ticket)}>
                       <i className="fa-solid fa-print"></i>
-                    </Button>
-                    <Button onClick={(e) => handleDelete(e, ticket)}>
+                    </button>
+                    <button onClick={(e) => handleDelete(e, ticket)}>
                       <i className="fa-solid fa-trash"></i>
-                    </Button>
+                    </button>
                   </td>
                 </tr>
                 <tr>
                   <td colSpan="3">
                     <Collapse in={openRow === index}>
-                      <div>
+                      <div className={`table-collapsed ${openRow === index ? 'expanded' : ''}`}>
                         <table className="table-details">
                           <thead>
                             <tr>
@@ -142,11 +145,11 @@ const TableTicket = () => {
               </React.Fragment>
             ))}
           </tbody>
-        </Table>
+        </table>
       ) : (
         <p>Sin tickets para mostrar</p>
       )}
-    </>
+    </div>
   );
 };
 
