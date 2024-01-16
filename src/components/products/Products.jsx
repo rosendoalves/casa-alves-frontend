@@ -46,6 +46,7 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   height: "80%",
   width: "80%", // Ajusta el ancho del modal según tus necesidades
+  overflow: "hidden"
 };
 
 /* eslint-disable react/prop-types */
