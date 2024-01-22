@@ -27,7 +27,7 @@ export default function useToken() {
     if (userToken) {
       // Establecer la propiedad 'expiresAt' según el tiempo de expiración configurado
       const expiresAt = Date.now() + TOKEN_EXPIRATION_HOURS * 60 * 60 * 1000;
-      const tokenWithExpiration = { ...userToken, expiresAt };
+      const tokenWithExpiration = { userToken, expiresAt };
       localStorage.setItem('token', JSON.stringify(tokenWithExpiration));
       setToken(tokenWithExpiration);
     } else {

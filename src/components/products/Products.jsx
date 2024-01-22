@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
-import { products } from "./data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -10,6 +9,8 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
+import useItemApi from "../../api/itemApi";
+import Swal from "sweetalert2";
 
 const TextField = styled.input`
   height: 32px;
@@ -45,8 +46,8 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   height: "80%",
-  width: "80%", // Ajusta el ancho del modal según tus necesidades
-  overflow: "hidden"
+  width: "80%",
+  overflow: "hidden",
 };
 
 /* eslint-disable react/prop-types */
@@ -68,6 +69,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 export const Products = () => {
+  const [loading, setLoading] = useState(true);
   const [filterText, setFilterText] = useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -77,27 +79,29 @@ export const Products = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [bulkUpdatePercentage, setBulkUpdatePercentage] = useState(0);
   const [showBulkUpdateModal, setShowBulkUpdateModal] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
   const [showBulkUpdateConfirmModal, setShowBulkUpdateConfirmModal] =
     useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const filteredItems = products.filter(
+  const filteredItems = products?.filter(
     (item) =>
       item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
   );
   const [updateFormData, setUpdateFormData] = useState({
     name: "",
     price: 0,
-    code: "",
-    category: "",
-    // ... otros campos según tu estructura de datos
+    internalcode: "",
+    barcode: "",
   });
+
+  const { getItems, updateItems } = useItemApi();
 
   const handleDelete = (productId) => {
     if (productId) {
       if (selectedRows.length > 1) {
         setShowConfirmDeleteModal(true);
       } else {
-        // Configura el producto seleccionado antes de abrir el modal
         setSelectedProductId(productId);
         setShowDeleteModal(true);
       }
@@ -106,8 +110,8 @@ export const Products = () => {
 
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
-    setShowConfirmDeleteModal(false); // También cerramos el modal de eliminación masiva si está abierto
-    setSelectedProductId(null); // Restablece el ID del producto seleccionado
+    setShowConfirmDeleteModal(false);
+    setSelectedProductId(null);
   };
 
   const handleBulkUpdate = () => {
@@ -115,44 +119,82 @@ export const Products = () => {
   };
 
   const handleBulkUpdateConfirm = () => {
-    // Lógica para la actualización masiva de precios
-    console.log(
-      `Actualizar precios masivamente en un ${bulkUpdatePercentage}%: ${selectedRows.length} productos`
-    );
-    setShowBulkUpdateConfirmModal(false);
-    setShowBulkUpdateModal(false);
+    const parsedPercentage = parseFloat(bulkUpdatePercentage);
+
+    if (
+      isNaN(parsedPercentage) ||
+      parsedPercentage < 0 ||
+      parsedPercentage > 500 ||
+      /\W/.test(bulkUpdatePercentage)
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Porcentaje inválido",
+        text: "El porcentaje debe estar en el rango [0, 500] y no debe contener caracteres especiales.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
+    const newPrice = 1 + bulkUpdatePercentage / 100;
+
+    const updatedProducts = selectedRows.map((row) => ({
+      ...row,
+      price: Math.round((row.price * newPrice) / 10) * 10,
+    }));
+
+    const formData = {
+      items: updatedProducts,
+    };
+
+    updateItems(formData)
+      .then(() => {
+        setShowBulkUpdateModal(false);
+        setShowBulkUpdateConfirmModal(false);
+        setBulkUpdatePercentage(0);
+        setToggleCleared(!toggleCleared);
+        setLoading(true);
+      })
+      .catch((err) => {
+        console.error("Error en la actualización masiva:", err);
+      })
   };
 
   const handleRowSelected = (state) => {
-    // Actualizar la lista de filas seleccionadas
     setSelectedRows(state.selectedRows);
   };
 
   const handleEdit = (productId) => {
-    // Obtener los detalles del producto seleccionado
     const product = products.find((item) => item.id === productId);
     setSelectedProduct(product);
 
-    // Cargar datos del producto en el estado del formulario
     setUpdateFormData({
       name: product.name || "",
       price: product.price || 0,
-      code: product.code || "",
-      category: product.category || "",
-      // ... otros campos según tu estructura de datos
+      internalcode: product.internalcode || "",
+      barcode: product.barcode || "",
     });
 
     setShowUpdateModal(true);
   };
 
   const handleUpdate = () => {
-    // Verificar si selectedProduct es nulo antes de intentar acceder a selectedProduct.id
     if (selectedProduct) {
-      console.log(`Actualizar producto: ${selectedProduct.id}`);
-      console.log("Nuevos datos:", updateFormData);
-      setShowUpdateModal(false);
+      const formData = {
+        items: [updateFormData],
+      };
+      setLoading(true);
+      updateItems(formData)
+        .then(() => {
+          setShowUpdateModal(false);
+          setShowBulkUpdateConfirmModal(false);
+        })
+        .catch((err) => console.log(err));
     }
   };
+
   const columns = [
     {
       name: "ID",
@@ -170,13 +212,18 @@ export const Products = () => {
       sortable: true,
     },
     {
-      name: "Código",
-      selector: (row) => row.code,
+      name: "Cód. Barra",
+      selector: (row) => row.barcode,
       sortable: true,
     },
     {
-      name: "Category",
-      selector: (row) => row.category,
+      name: "Cód. Interno",
+      selector: (row) => row.internalcode,
+      sortable: true,
+    },
+    {
+      name: "Creado por",
+      selector: (row) => row.updatedByDisplayValue,
       sortable: true,
     },
     {
@@ -186,12 +233,13 @@ export const Products = () => {
           <Button
             className="btn btn-danger"
             onClick={() => handleDelete(row.id)}
+            disabled={true}
           >
             <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTrashAlt} />
           </Button>
           <Button
             className="btn btn-warning"
-            onClick={() => handleEdit(row.id)} // Llamar handleEdit con el ID del producto
+            onClick={() => handleEdit(row.id)}
           >
             <FontAwesomeIcon icon={faEdit} style={{ cursor: "pointer" }} />
           </Button>
@@ -199,6 +247,20 @@ export const Products = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    getItems()
+      .then((res) => {
+        res.payload.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA;
+        });
+        setProducts(res.payload);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [loading]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -234,6 +296,7 @@ export const Products = () => {
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         selectableRows
+        clearSelectedRows={toggleCleared}
         persistTableHead
         onSelectedRowsChange={handleRowSelected}
         contextActions={[
@@ -241,7 +304,8 @@ export const Products = () => {
             key="delete"
             variant="danger"
             onClick={() => handleDelete(selectedRows[0]?.id)}
-            disabled={selectedRows.length < 1}
+            // disabled={selectedRows.length < 1}
+            disabled={true}
           >
             Eliminar
           </BootstrapButton>,
@@ -340,32 +404,35 @@ export const Products = () => {
                 onChange={(e) =>
                   setUpdateFormData({
                     ...updateFormData,
-                    price: e.target.value,
+                    price: Number(e.target.value),
                   })
                 }
               />
             </Form.Group>
             <Form.Group controlId="updateFormCode">
-              <Form.Label>Código</Form.Label>
+              <Form.Label>Cód. Interno</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Código del producto"
-                value={updateFormData.code}
+                placeholder="Código interno del producto"
+                value={updateFormData.internalcode}
                 onChange={(e) =>
-                  setUpdateFormData({ ...updateFormData, code: e.target.value })
+                  setUpdateFormData({
+                    ...updateFormData,
+                    internalcode: e.target.value,
+                  })
                 }
               />
             </Form.Group>
             <Form.Group controlId="updateFormCategory">
-              <Form.Label>Categoría</Form.Label>
+              <Form.Label>Cód. Barra</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Categoría del producto"
-                value={updateFormData.category}
+                placeholder="Código de barra del producto"
+                value={updateFormData.barcode}
                 onChange={(e) =>
                   setUpdateFormData({
                     ...updateFormData,
-                    category: e.target.value,
+                    barcode: e.target.value,
                   })
                 }
               />
@@ -399,8 +466,11 @@ export const Products = () => {
           <Form.Group controlId="bulkUpdateForm">
             <Form.Label>Porcentaje de actualización:</Form.Label>
             <Form.Control
+              required
               type="number"
               placeholder="Ingrese el porcentaje"
+              pattern="^[1-9]\d{0,2}$|1000"
+              title="El precio debe ser un número mayor que 0, no puede contener caracteres especiales y no debe superar los 1000."
               value={bulkUpdatePercentage}
               onChange={(e) => setBulkUpdatePercentage(e.target.value)}
             />

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./navbar.css";
 import { NavbarCollapse } from "react-bootstrap";
+import { logoutUser } from "../../api/loginApi.js";
 
 const NavBar = () => {
   return (
@@ -39,6 +40,9 @@ const NavBar = () => {
               <Link className="nav-link nav-item" to="/productos">
                 Productos
               </Link>
+               <button className="btn" onClick={logoutUser}>
+               <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
             </Nav>
           </NavbarCollapse>
         </Container>

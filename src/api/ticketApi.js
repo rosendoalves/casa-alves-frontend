@@ -3,7 +3,7 @@ import useToken from "../hooks/useToken";
 
 const useTicketApi = () => {
   const { token, setToken } = useToken();
-  console.log("🚀 ~ file: ticketApi.js:6 ~ useTicketApi ~ token:", token)
+
 
   const getTickets = async () => {
     try {
