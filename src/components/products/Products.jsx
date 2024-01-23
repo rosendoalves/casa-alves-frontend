@@ -84,10 +84,17 @@ export const Products = () => {
   const [showBulkUpdateConfirmModal, setShowBulkUpdateConfirmModal] =
     useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const filteredItems = products?.filter(
-    (item) =>
-      item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const filteredItems = products?.filter((item) => {
+    const lowerCaseFilter = filterText.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(lowerCaseFilter) ||
+      item.internalcode.toLowerCase().includes(lowerCaseFilter) ||
+      item.updatedByDisplayValue.toLowerCase().includes(lowerCaseFilter) ||
+      item.barcode.toLowerCase().includes(lowerCaseFilter) ||
+      (typeof item.price === 'number' && item.price.toString().includes(filterText))
+    );
+  });
+  
   const [updateFormData, setUpdateFormData] = useState({
     name: "",
     price: 0,
