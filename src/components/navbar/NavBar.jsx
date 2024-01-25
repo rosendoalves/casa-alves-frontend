@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./navbar.css";
 import { NavbarCollapse } from "react-bootstrap";
@@ -10,10 +10,13 @@ import { logoutUser } from "../../api/loginApi.js";
 
 const NavBar = () => {
 
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     logoutUser();
-    window.location.href="/"
-  }
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <>
       <Navbar bg="dark" expand="lg" data-bs-theme="dark">
