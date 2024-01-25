@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./navbar.css";
 import { NavbarCollapse } from "react-bootstrap";
+import { logoutUser } from "../../api/loginApi.js";
 
 const NavBar = () => {
   return (
@@ -27,7 +28,7 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <NavbarCollapse>
             <Nav className="me-auto">
-              <Link className="nav-link nav-item" to="/">
+              {/* <Link className="nav-link nav-item" to="/">
                 Home
               </Link>
               <Link className="nav-link nav-item" to="/ticket">
@@ -35,7 +36,13 @@ const NavBar = () => {
               </Link>
               <Link className="nav-link nav-item" to="/ventas">
                 Ventas
+              </Link> */}
+              <Link className="nav-link nav-item" to="/productos">
+                Productos
               </Link>
+               <button className="btn" onClick={logoutUser}>
+               <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
             </Nav>
           </NavbarCollapse>
         </Container>

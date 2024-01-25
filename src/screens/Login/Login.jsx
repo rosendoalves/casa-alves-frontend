@@ -3,19 +3,28 @@ import PropTypes from "prop-types";
 
 import "./login.css";
 import { loginUser } from "../../api/loginApi.js";
+import { Spinner } from "react-bootstrap";
 
 const Login = ({ setToken }) => {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
-      userid: username,
-      password,
-    });
-    setToken(token?.payload?.token);
+    try {
+      setLoading(true);
+      const token = await loginUser({
+        userid: username,
+        password,
+      });
+      setToken(token?.payload?.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="login-wrapper">
       <h1>Iniciar Sesión ⏩</h1>
@@ -43,7 +52,19 @@ const Login = ({ setToken }) => {
           />
         </div>
         <div className="login-button-container">
-          <button className="login-button" type="submit">Entrar</button>
+          <button
+            className="btn btn-success login-button"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : (
+              "Entrar"
+            )}
+          </button>
         </div>
       </form>
     </div>

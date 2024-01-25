@@ -1,0 +1,93 @@
+/* Estilos comunes para ambos temas */
+.app {
+  /* padding: 20px; */
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Estilos específicos para el tema claro */
+[data-theme='light'] {
+  --bg-color: #ffffff;
+  --text-color: #0a0808;
+}
+
+.app.light {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Estilos específicos para el tema oscuro */
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --bg-color-second: #191919;
+  --text-main: #FFFFFF;
+  --text-second: #CCCCCC;
+  --text-third: #3498db;
+  --border: #303030;
+  --border-table: #CCCCCC;
+  --button-icon: #2E2E2E;
+  --input-background: #1A1A1A;
+  --input-placeholder: #6c7a89;
+}
+
+.app.dark {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+/* Ejemplo de etiquetas comunes */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-second);
+}
+
+a {
+  color: var(--text-third);
+}
+
+button {
+  background-color: var(--button-icon);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  border-radius: 10px;
+  width: 80px;
+  height: 40px;
+}
+
+input {
+  background-color: var(--input-background);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  &::placeholder {
+    color: var(--input-placeholder);
+  }
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid var(--border-table);
+}
+
+th {
+  border: 1px solid var(--border-table);
+  padding: 8px; 
+}
+
+td {
+  padding: 5px;
+}
+
+tr.active {
+  background-color: var(--bg-color-second);
+}

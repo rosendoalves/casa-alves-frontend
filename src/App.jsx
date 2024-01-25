@@ -4,12 +4,13 @@ import Home from "./components/home/Home";
 import { ThemeContext } from "./context/ThemeContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
-import Ticket from "./components/ticket/Ticket";
-import TableTicket from "./components/ticket/TableTicket";
+// import Ticket from "./components/ticket/Ticket";
+// import TableTicket from "./components/ticket/TableTicket";
 
 import useToken from "./hooks/useToken";
-import Sales from "./screens/sales/Sales";
+// import Sales from "./screens/sales/Sales";
 import Login from "./screens/login/Login";
+import Products from "./components/products/Products";
 // import ButtonTheme from './components/buttonTheme/ButtonTheme';
 
 function App() {
@@ -27,10 +28,11 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} />
           <Route path="/ticket" element={<TableTicket />} />
           <Route path="/ticket/form" element={<Ticket />} />
-          <Route path="/ventas" element={<Sales />} />
+          <Route path="/ventas" element={<Sales />} /> */}
+          <Route path="/productos" element={<Products />} />
 
           <Route path="*" element={<Home />} />
         </Routes>
