@@ -36,5 +36,5 @@ export const loginUser = async (credentials) => {
 
 export const logoutUser = () => {
   localStorage.removeItem("token");
-  redirect("login")
+  redirect("/")
 };
