@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const loginUser = async (credentials) => {
@@ -36,5 +35,4 @@ export const loginUser = async (credentials) => {
 
 export const logoutUser = () => {
   localStorage.removeItem("token");
-  redirect("/")
 };
