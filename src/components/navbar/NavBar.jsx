@@ -9,6 +9,11 @@ import { NavbarCollapse } from "react-bootstrap";
 import { logoutUser } from "../../api/loginApi.js";
 
 const NavBar = () => {
+
+  const handleLogout = () => {
+    logoutUser();
+    window.location.href="/"
+  }
   return (
     <>
       <Navbar bg="dark" expand="lg" data-bs-theme="dark">
@@ -40,7 +45,7 @@ const NavBar = () => {
               <Link className="nav-link nav-item" to="/productos">
                 Productos
               </Link>
-               <button className="btn" onClick={logoutUser}>
+               <button className="btn" onClick={handleLogout}>
                <i className="fa-solid fa-right-from-bracket"></i>
               </button>
             </Nav>
