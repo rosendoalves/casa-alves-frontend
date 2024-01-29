@@ -14,6 +14,10 @@ export const loginUser = async (credentials) => {
     );
 
     const data = await response.json();
+
+    if( data.status !== 200) {
+      throw new Error;
+    }
     Swal.fire({
       position: "center",
       icon: "success",
@@ -33,6 +37,6 @@ export const loginUser = async (credentials) => {
   }
 };
 
-export const logoutUser = () => {
-  localStorage.removeItem("token");
+export const logoutUser = async () => {
+  await localStorage.removeItem("token");
 };

@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import useItemApi from "../../api/itemApi";
 import Swal from "sweetalert2";
+import { formatDateShow, formatNumberWithCommas } from "../../utils/format";
 
 const TextField = styled.input`
   height: 32px;
@@ -80,6 +81,7 @@ export const Products = () => {
   const [bulkUpdatePercentage, setBulkUpdatePercentage] = useState(0);
   const [showBulkUpdateModal, setShowBulkUpdateModal] = useState(false);
   const [products, setProducts] = useState([]);
+  console.log("🚀 ~ Products ~ products:", products)
   const [toggleCleared, setToggleCleared] = useState(false);
   const [showBulkUpdateConfirmModal, setShowBulkUpdateConfirmModal] =
     useState(false);
@@ -204,19 +206,16 @@ export const Products = () => {
 
   const columns = [
     {
-      name: "ID",
-      selector: (row) => row.id,
-      sortable: true,
-    },
-    {
       name: "Nombre",
       selector: (row) => row.name,
       sortable: true,
+      wrap: true
     },
     {
       name: "Precio",
-      selector: (row) => row.price,
+      selector: (row) => formatNumberWithCommas(row.price),
       sortable: true,
+      center: true,
     },
     {
       name: "Cód. Barra",
@@ -229,9 +228,16 @@ export const Products = () => {
       sortable: true,
     },
     {
-      name: "Creado por",
-      selector: (row) => row.updatedByDisplayValue,
+      name: "Fecha",
+      selector: (row) => `${formatDateShow(row.createdAt)}`,
       sortable: true,
+      wrap: true
+    },
+    {
+      name: "Creador",
+      selector: (row) =>`${row.updatedByDisplayValue}`,
+      sortable: true,
+      wrap: true
     },
     {
       name: "Acciones",
