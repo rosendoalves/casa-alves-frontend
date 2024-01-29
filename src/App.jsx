@@ -23,7 +23,7 @@ function App() {
   return (
     <div className={`app ${theme}`} data-theme={theme}>
       {token ? (
-        <BrowserRouter>
+        <BrowserRouter basename="casa-alves-frontend">
           <NavBar />
           <Routes>
              {/* <Route path="/" element={<Home />} /> */}
