@@ -23,14 +23,14 @@ function App() {
   return (
     <div className={`app ${theme}`} data-theme={theme}>
       {token ? (
-        <BrowserRouter>
+        <BrowserRouter basename="casa-alves-frontend">
           <NavBar />
           <Routes>
              {/* <Route path="/" element={<Home />} /> */}
           <Route path="/ticket" element={<TableTicket />} />
           {/* <Route path="/ticket/form" element={<Ticket />} /> */}
           {/* <Route path="/ventas" element={<Sales />} /> */}
-          <Route path="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route path="/productos" element={<Products />} />
 
           <Route path="*" element={<Home />} />
