@@ -3,7 +3,6 @@ import useToken from "../hooks/useToken";
 
 const useTicketApi = () => {
   const { token, setToken } = useToken();
-  console.log("🚀 ~ useTicketApi ~ token:", token)
 
 
   const getTickets = async () => {
@@ -16,7 +15,6 @@ const useTicketApi = () => {
         }
       );
       const data = await response.json();
-      console.log("🚀 ~ getTickets ~ data:", data)
       if (data.payload && data.payload.length > 0) {
         data.payload.sort((a, b) => {
           const dateA = new Date(a.createdAt);

@@ -16,7 +16,6 @@ import Products from "./components/products/Products";
 function App() {
   const { theme } = useContext(ThemeContext);
   const { token, setToken } = useToken();
-  console.log("🚀 ~ App ~ token:", token)
 
   useEffect(() => {
   }, [token])

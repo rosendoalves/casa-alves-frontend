@@ -14,10 +14,10 @@ const NavBar = () => {
   const {setToken} = useToken()
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logoutUser();
+  const handleLogout = async () => {
+    await logoutUser();
     setToken(null)
-    navigate.push("/"); 
+    navigate(0); 
   };
   return (
     <>

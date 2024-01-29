@@ -24,7 +24,6 @@ const useTicket = () => {
       total: total
     }
     e.preventDefault();
-    console.log(form);
     createTicket(form)
     .then((res) => {
       if(res.status === 200) navigate('/ticket')
