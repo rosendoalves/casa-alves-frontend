@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./navbar.css";
 import { NavbarCollapse } from "react-bootstrap";
@@ -12,11 +12,12 @@ import useToken from "../../hooks/useToken.js";
 const NavBar = () => {
 
   const {setToken} = useToken()
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logoutUser();
+  const handleLogout = async () => {
+    await logoutUser();
     setToken(null)
-    window.location.href="/"
+    navigate(0); 
   };
   return (
     <>

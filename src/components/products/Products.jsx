@@ -81,7 +81,6 @@ export const Products = () => {
   const [bulkUpdatePercentage, setBulkUpdatePercentage] = useState(0);
   const [showBulkUpdateModal, setShowBulkUpdateModal] = useState(false);
   const [products, setProducts] = useState([]);
-  console.log("🚀 ~ Products ~ products:", products)
   const [toggleCleared, setToggleCleared] = useState(false);
   const [showBulkUpdateConfirmModal, setShowBulkUpdateConfirmModal] =
     useState(false);
