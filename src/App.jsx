@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./App.css";
 import Home from "./components/home/Home";
 import { ThemeContext } from "./context/ThemeContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
 // import Ticket from "./components/ticket/Ticket";
-// import TableTicket from "./components/ticket/TableTicket";
+import TableTicket from "./components/ticket/TableTicket";
 
 import useToken from "./hooks/useToken";
 // import Sales from "./screens/sales/Sales";
@@ -16,28 +16,30 @@ import Products from "./components/products/Products";
 function App() {
   const { theme } = useContext(ThemeContext);
   const { token, setToken } = useToken();
-  if (!token) {
-    return (
-      <div className={`app ${theme}`} data-theme={theme}>
-        <Login setToken={setToken} />
-      </div>
-    );
-  }
+  console.log("🚀 ~ App ~ token:", token)
+
+  useEffect(() => {
+  }, [token])
+
   return (
     <div className={`app ${theme}`} data-theme={theme}>
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          {/* <Route path="/" element={<Home />} />
+      {token ? (
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+             {/* <Route path="/" element={<Home />} /> */}
           <Route path="/ticket" element={<TableTicket />} />
-          <Route path="/ticket/form" element={<Ticket />} />
-          <Route path="/ventas" element={<Sales />} /> */}
+          {/* <Route path="/ticket/form" element={<Ticket />} /> */}
+          {/* <Route path="/ventas" element={<Sales />} /> */}
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Products />} />
 
           <Route path="*" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <Login setToken={setToken} />
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Collapse } from "react-bootstrap";
 import Loading from "../spinner/Loading";
 import "./ticket.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import useTicketApi from "../../api/ticketApi";
 import {
   formatTime,
@@ -58,11 +58,11 @@ const TableTicket = () => {
     <div className="table-container">
       <div className="header-table">
         <h1>Ticket Realizados</h1>
-      <button className="">
+      {/* <button className="">
         <Link  className="button-link" to="/ticket/form">
           Nuevo
         </Link>
-      </button>
+      </button> */}
       </div>
       {tickets.length > 0 ? (
         <table className="table-expandable" >

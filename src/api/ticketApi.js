@@ -3,18 +3,20 @@ import useToken from "../hooks/useToken";
 
 const useTicketApi = () => {
   const { token, setToken } = useToken();
+  console.log("🚀 ~ useTicketApi ~ token:", token)
 
 
   const getTickets = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_URL}/api/tickets/getUserTickets`,
+        `${process.env.REACT_APP_URL}/api/tickets/getTickets`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token.userToken}` },
         }
       );
       const data = await response.json();
+      console.log("🚀 ~ getTickets ~ data:", data)
       if (data.payload && data.payload.length > 0) {
         data.payload.sort((a, b) => {
           const dateA = new Date(a.createdAt);

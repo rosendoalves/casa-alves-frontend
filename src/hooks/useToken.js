@@ -22,6 +22,7 @@ export default function useToken() {
   };
 
   const [token, setToken] = useState(getToken);
+  console.log("🚀 ~ useToken ~ token:", token)
 
   const saveToken = userToken => {
     if (userToken) {

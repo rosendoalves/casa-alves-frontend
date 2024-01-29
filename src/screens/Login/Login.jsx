@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./login.css";
-import { loginUser } from "../../api/loginApi.js";
+import { loginUser } from "../../api/loginApi.js.js";
 import { Spinner } from "react-bootstrap";
 
 const Login = ({ setToken }) => {
