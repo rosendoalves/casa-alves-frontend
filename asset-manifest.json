@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/casa-alves-frontend/static/css/main.ea6e6b05.css",
-    "main.js": "/casa-alves-frontend/static/js/main.2b236e13.js",
+    "main.js": "/casa-alves-frontend/static/js/main.024b49c8.js",
     "static/media/negocio.png": "/casa-alves-frontend/static/media/negocio.1fc66f139691cb93db95.png",
     "static/media/logo.png": "/casa-alves-frontend/static/media/logo.45f1673b8acc8b918217.png",
     "index.html": "/casa-alves-frontend/index.html",
     "main.ea6e6b05.css.map": "/casa-alves-frontend/static/css/main.ea6e6b05.css.map",
-    "main.2b236e13.js.map": "/casa-alves-frontend/static/js/main.2b236e13.js.map"
+    "main.024b49c8.js.map": "/casa-alves-frontend/static/js/main.024b49c8.js.map"
   },
   "entrypoints": [
     "static/css/main.ea6e6b05.css",
-    "static/js/main.2b236e13.js"
+    "static/js/main.024b49c8.js"
   ]
 }
