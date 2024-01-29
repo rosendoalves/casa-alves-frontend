@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rosendoalves/casa-alves-frontend/static/css/main.ea6e6b05.css",
-    "main.js": "/rosendoalves/casa-alves-frontend/static/js/main.e8dfe610.js",
-    "static/media/negocio.png": "/rosendoalves/casa-alves-frontend/static/media/negocio.1fc66f139691cb93db95.png",
-    "static/media/logo.png": "/rosendoalves/casa-alves-frontend/static/media/logo.45f1673b8acc8b918217.png",
-    "index.html": "/rosendoalves/casa-alves-frontend/index.html",
-    "main.ea6e6b05.css.map": "/rosendoalves/casa-alves-frontend/static/css/main.ea6e6b05.css.map",
-    "main.e8dfe610.js.map": "/rosendoalves/casa-alves-frontend/static/js/main.e8dfe610.js.map"
+    "main.css": "/casa-alves-frontend/static/css/main.ea6e6b05.css",
+    "main.js": "/casa-alves-frontend/static/js/main.f9bf9206.js",
+    "static/media/negocio.png": "/casa-alves-frontend/static/media/negocio.1fc66f139691cb93db95.png",
+    "static/media/logo.png": "/casa-alves-frontend/static/media/logo.45f1673b8acc8b918217.png",
+    "index.html": "/casa-alves-frontend/index.html",
+    "main.ea6e6b05.css.map": "/casa-alves-frontend/static/css/main.ea6e6b05.css.map",
+    "main.f9bf9206.js.map": "/casa-alves-frontend/static/js/main.f9bf9206.js.map"
   },
   "entrypoints": [
     "static/css/main.ea6e6b05.css",
-    "static/js/main.e8dfe610.js"
+    "static/js/main.f9bf9206.js"
   ]
 }
