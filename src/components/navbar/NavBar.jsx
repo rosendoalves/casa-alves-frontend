@@ -17,7 +17,7 @@ const NavBar = () => {
   const handleLogout = async () => {
     await logoutUser();
     setToken(null)
-    navigate(0); 
+    navigate("/"); 
   };
   return (
     <>
